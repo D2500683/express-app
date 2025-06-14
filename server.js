@@ -68,3 +68,21 @@ async function startServer() {
         res.status(500).json({message:error.message});
     }
 });
+
+app.get('/api/search', async (req, res) => {
+    try {
+        const query = req.query.q || '';
+        // Build case-insensitive regex for partial match
+        const regex = new RegExp(query, 'i');
+        const filter = {
+            $or: [
+                { subject: regex },
+                { location: regex }
+            ]
+        };
+        const results = await db.collection('lessons').find(query ? filter : {}).toArray();
+        res.json(results);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
