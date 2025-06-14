@@ -16,18 +16,33 @@ app.use((req, res, next) => {
     const url = req.url;
     const ip = req.ip;
 
-    //Log request Details
+    
     console.log(`[${timestamp}] ${method} ${url} - IP: ${ip}`);
 
-    //Log request body if it exists
+    
     if (req.body && typeof req.body === 'object' && Object.keys(req.body).length > 0) {
         console.log('Request Body:', JSON.stringify(req.body, null, 2));
     }
 
-    //Capture response status
+    
     res.on('finish', () => {
         console.log(`[${timestamp}] Response Status: ${res.statusCode}`);
-        console.log('-'.repeat(50));// Seperator so you can read it better
+        console.log('-'.repeat(50));
     });
     next();
+});
+
+app.use('/images', (req, res, next) => {
+    const imagePath = path.join(__dirname, 'public/images', req.path);
+
+    fs.access(imagePath, fs.constants.F_OK, (err) => {
+        if (err) {
+            console.log(`[${new Date().toISOString()}] Image not found:${req.path}`);
+            return res.status(404).json({
+                message: 'Image not Found',
+                requestedPath: req.path
+            });
+        }
+        next()
+    })
 });
