@@ -152,3 +152,7 @@ app.get('/api/orders', async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 });
+
+app.get('/test-image/:imageName', (req,res) => {
+    res.redirect(`/images/${req.params.imageName}`);
+});
