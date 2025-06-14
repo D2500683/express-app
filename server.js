@@ -46,3 +46,25 @@ app.use('/images', (req, res, next) => {
         next()
     })
 });
+
+app.use('/images', express.static(path.join(__dirname, 'public/images')));
+
+const uri = process.env.MONGODB_URI;
+const client = new MongoClient(uri);
+let db
+
+async function startServer() {
+    try {
+        await client.connect();
+        db = client.db('lessonshop');
+        console.log('Connected to Mongo db atlas');
+
+        
+        app.get('/api/lessons', async (req, res) => {
+    try{
+        const lessons = await db.collection('lessons').find({}).toArray();
+        res.json(lessons);
+    }catch(error){
+        res.status(500).json({message:error.message});
+    }
+});
