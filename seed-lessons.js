@@ -12,7 +12,9 @@ const lessons = [
   { subject: 'English', price: 100, location: 'Sheffield', spaces: 5, icon: '/images/english.jpeg' },
   { subject: 'History', price: 150, location: 'Liverpool', spaces: 5, icon: '/images/history.jpeg' },
   { subject: 'Geography', price: 90, location: 'Kano', spaces: 5, icon: '/images/geography.jpeg' },
-  { subject: 'Computer Science', price: 100, location: 'New York', spaces: 5, icon: '/images/computer.jpeg' }
+  { subject: 'Computer Science', price: 100, location: 'New York', spaces: 5, icon: '/images/computer.jpeg' },
+  { subject: 'Social Studies', price: 90, location: 'Denver', spaces: 5, icon: '/images/computer.jpeg' },
+  { subject: 'Information Technology', price: 100, location: 'Flic en Flac', spaces: 5, icon: '/images/computer.jpeg' }
 ];
 
 async function seed() {
